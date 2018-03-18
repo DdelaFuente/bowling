@@ -1,0 +1,52 @@
+body {
+   margin: 0;
+   padding: 0;
+}
+
+.player-frame {
+   display: flex;
+}
+
+.frame {
+   display: flex;
+   flex: 1;
+   flex-direction: column;
+   height: 7rem;
+   text-align: center;
+
+   &__header {
+      height: 2rem;
+      line-height: 2rem;
+   }
+
+   &__rolls {
+      display: flex;
+      height: 2.5rem;
+   }
+}
+
+.frame__roll {
+   display: flex;
+   flex: 1;
+   align-items: center;
+   justify-content: center;
+   margin: 0.2rem;
+   border: 1px solid #CCC;
+}
+
+.frame__score {
+   display: flex;
+   flex: 1;
+   justify-content: center;
+   align-items: center;
+   margin: 0.2rem;
+   border: 1px solid #CCC;
+}
+
+.game {
+   &--ended {
+      .button-play {
+         display: none;
+      }
+   }
+}
