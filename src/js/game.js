@@ -14,9 +14,25 @@ export default class Game {
 
       this.currentFrame = 1;
       this.currentRoll = 1;
-      this.hitPinsInCurrentFrame = 0;
-      this.score = 0;
 
+      this.hits = [];
+      this.points = [];
+
+      this.initPlayer()
+   }
+
+   //todo separate
+   initPlayer() {
+      for (let i = 0; i <= this._maxFrames - 2; i++) {
+         this.hits[i] = [0, 0];
+      }
+
+      //last frame has 3 possible rolls
+      this.hits[this._maxFrames - 1] = [0, 0, 0];
+
+      for (let i = 0; i <= this._maxFrames - 1; i++) {
+         this.points[i] = null;
+      }
    }
 
 
@@ -32,27 +48,35 @@ export default class Game {
 
    /**
     * returns the symbol that represents the roll score
-    * @param hitPinsInCurrentFrame
+    * @param hitPinsInCurrentRoll
     * @param currentRoll
     * @returns {string}
     * @private
     */
-   _getSymbolRoll(hitPinsInCurrentFrame, currentRoll) {
+   _getSymbolRoll(hitPinsInCurrentRoll, currentRoll) {
       let symbol;
 
       //the player has hit all the pins
-      if (hitPinsInCurrentFrame === this._maxPins) {
-         symbol = currentRoll === this._minRoll ? this._symbolStrike : this._symbolSpare;
+      if (this.getHitsInCurrentFrame() === this._maxPins) {
+         symbol = currentRoll < this._maxRolls ? this._symbolStrike : this._symbolSpare;
       }
       //the player has miss all the pins
-      else if (hitPinsInCurrentFrame === 0) {
+      else if (hitPinsInCurrentRoll === 0) {
          symbol = this._symbolMiss;
       }
       else {
-         symbol = hitPinsInCurrentFrame
+         symbol = hitPinsInCurrentRoll
       }
 
       return String(symbol);
+   }
+
+   /**
+    * return total hit pins for current frame
+    */
+   getHitsInCurrentFrame() {
+      return this.hits[this.currentFrame - 1].reduce((result, value) =>
+         result + value, 0);
    }
 
    /**
@@ -62,41 +86,35 @@ export default class Game {
     * @param hitPinsInCurrentRoll
     */
    updateRollScore(currentFrame, currentRoll, hitPinsInCurrentRoll) {
-      let rollSymbol = this._getSymbolRoll(hitPinsInCurrentRoll, currentRoll)
+      this.hits[currentFrame - 1][currentRoll - 1] = hitPinsInCurrentRoll;
 
-      console.log (currentFrame, currentRoll, hitPinsInCurrentRoll, rollSymbol);
+      let rollSymbol = this._getSymbolRoll(hitPinsInCurrentRoll, currentRoll);
 
       // update scoring
       const currentRollCell = document.querySelector(`.frame-${currentFrame} .frame__roll${currentRoll}`);
       currentRollCell.textContent = rollSymbol;
    }
 
-
    /**
     * update the frame score
-    * @param currentFrame
-    * @param hitPinsInCurrentRoll
     */
-   updateFrameScore(currentFrame, hitPinsInCurrentRoll) {
-      this.hitPinsInCurrentFrame += hitPinsInCurrentRoll;
+   updateFramesScore() {
+      for (let i = 0; i <= this.currentFrame - 1; i++) {
+         let extraPoints = 0;
 
-      const frameScoreCell = document.querySelector(`.frame-${currentFrame} .frame__score`);
-      frameScoreCell.textContent = this.hitPinsInCurrentFrame;
-   }
+         //extra points for strike
+         if (this.hits[i][0] === this._maxPins) {
+            extraPoints = this.hits[i + 1][0] + this.hits[i + 1][1] ;
+         }
+         //extra points for spare
+         else if (this.hits[i][0] + this.hits[i][1] === this._maxPins) {
+            extraPoints = this.hits[i + 1][0];
+         }
 
-   /**
-    *
-    */
-   prepareNextRoll() {
+         this.points[i] = this.hits[i][0] + this.hits[i][1] + extraPoints;
 
-      console.log('this.isFrameFinished()', this.isFrameFinished());
-      if (this.isFrameFinished()) {
-         this.currentFrame++;
-         this.currentRoll = this._minRoll;
-         this.hitPinsInCurrentFrame = 0;
-      }
-      else {
-         this.currentRoll += 1;
+         const frameScoreCell = document.querySelector(`.frame-${i + 1} .frame__score`);
+         frameScoreCell.textContent = this.points[i];
       }
    }
 
@@ -104,10 +122,23 @@ export default class Game {
     * update the sum of all frames for the player
     */
    updatePlayerScore() {
-      this.score += this.hitPinsInCurrentFrame;
+      let totalScore = this.points.reduce((result, value) =>
+         result + value, 0);
 
       const frameScoreCell = document.querySelector(`.frame-total .frame__score`);
-      frameScoreCell.textContent = this.score;
+      frameScoreCell.textContent = totalScore;
+   }
+
+   /**
+    *
+    */
+   prepareNextFrame() {
+      this.currentFrame += 1;
+      this.currentRoll = this._minRoll;
+   }
+
+   prepareNextRoll() {
+      this.currentRoll += 1;
    }
 
    /**
@@ -116,9 +147,9 @@ export default class Game {
     */
    isFrameFinished() {
       //on the last frame
-      if (this.currentFrame < this._maxFrames) {
-         //the players has not hit all the pins on the first 2 rolls
-         if (this.currentRoll === this._maxRolls && this.hitPinsInCurrentFrame < this._maxPins) {
+      if (this.currentFrame === this._maxFrames) {
+         //the players has roll twice and did not hit all the pins
+         if (this.currentRoll === this._maxRolls && this.getHitsInCurrentFrame() < this._maxPins) {
             return true;
          }
 
@@ -128,15 +159,18 @@ export default class Game {
          }
       }
 
-      //from frame 1 to 9, the player has already roll twice
-      if (this.currentRoll === this._maxRolls) {
-         return true;
-      }
+      //from frame 1 to 9,
+      if (this.currentFrame < this._maxFrames) {
+         // the player has already roll twice
+         if (this.currentRoll === this._maxRolls) {
+            return true;
+         }
 
-      //all the pins have been hit (strike)
-      //this statement can be simplified, I keep it for clarity.
-      if (this.hitPinsInCurrentFrame === this._maxPins) {
-         return true;
+         //all the pins have been hit (strike)
+         //this statement can be simplified, I keep it for clarity.
+         if (this.getHitsInCurrentFrame() === this._maxPins) {
+            return true;
+         }
       }
 
       return false;
@@ -162,13 +196,18 @@ export default class Game {
     */
    roll() {
       // generate a random number of hit pins
-      let hitPinsInCurrentRoll = this._getRandomHitPins(this.hitPinsInCurrentFrame);
+      let hitPinsInCurrentRoll = this._getRandomHitPins(this.getHitsInCurrentFrame());
 
       this.updateRollScore(this.currentFrame, this.currentRoll, hitPinsInCurrentRoll);
-      this.updateFrameScore(this.currentFrame, hitPinsInCurrentRoll);
+      this.updateFramesScore();
       this.updatePlayerScore();
 
-      this.prepareNextRoll();
+      if (this.isFrameFinished()) {
+         this.prepareNextFrame();
+      }
+      else {
+         this.prepareNextRoll();
+      }
 
       if (this.isGameEnded()) {
          this.onGameEnd();
