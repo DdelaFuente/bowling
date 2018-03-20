@@ -204,6 +204,7 @@ export default class Game {
    roll() {
       let activePlayer = this.players[this.indexActivePlayer];
 
+      //having here a list of methods, makes the code more readable describing the actions, one after the other.
       activePlayer.roll(this.currentFrameIndex);
       this._updateRollsScore(activePlayer, this.currentFrameIndex);
       this._updateFramesScore(activePlayer, this.currentFrameIndex);
