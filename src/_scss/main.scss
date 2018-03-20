@@ -1,10 +1,23 @@
 body {
+   font-family: Helvetica, sans-serif;
    margin: 0;
-   padding: 0;
+   padding: 30px;
+   background-color: #EEE;
 }
 
-.player-frame {
+.player {
    display: flex;
+   margin-bottom: 30px;
+   background-color: #DDD;
+   padding: 5px;
+
+   &--active {
+      background-color: rgba(0, 0, 0, .2);
+   }
+}
+
+.player--template {
+   display: none;
 }
 
 .frame {
@@ -32,6 +45,7 @@ body {
    justify-content: center;
    margin: 0.2rem;
    border: 1px solid #CCC;
+   background-color: #FFF;
 }
 
 .frame__score {
@@ -41,11 +55,74 @@ body {
    align-items: center;
    margin: 0.2rem;
    border: 1px solid #CCC;
+   background-color: #FFF;
+}
+
+.frame-total {
+   .frame__score {
+      font-size: 1rem;
+      font-weight: bold;
+
+      &--winner {
+         transition: transform 1s ease-in-out;
+         transform: scale(1.2);
+         background: #CCCC32;
+      }
+   }
 }
 
 .game {
    &--ended {
       .button-play {
+         display: none;
+      }
+   }
+}
+
+.btn {
+   background-color: #E8E100;
+   border: none;
+   border-radius: 0;
+   color: #000;
+   cursor: pointer;
+   font-size: 0.9rem;
+   font-weight: bold;
+   line-height: 1.5rem;
+   min-height: 40px;
+   outline: 0;
+   padding: 8px 12px;
+   text-align: center;
+   text-decoration: none;
+   margin-right: 30px;
+   min-width: 150px;
+
+   &:hover {
+      background-color: darken(#E8E100, 5);
+   }
+}
+
+.btn-roll {
+   display: none;
+}
+
+.toolbar {
+   padding: 20px 0;
+
+   &--started {
+      .btn-add-player,
+      .btn-play {
+         display: none;
+      }
+
+      .btn-roll {
+         display: block;
+      }
+   }
+
+   &--finished {
+      .btn-add-player,
+      .btn-play,
+      .btn-roll {
          display: none;
       }
    }
