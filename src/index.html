@@ -7,111 +7,116 @@
 </head>
 <body>
 
-<div class="game">
+<section class="game">
+</section>
 
-   <div class="player-frame">
+<section class="toolbar">
+   <button class="btn btn-add-player">Add player</button>
+   <button class="btn btn-play">Play</button>
+   <button class="btn btn-roll">Roll</button>
+</section>
 
-      <div class="frame frame-1">
-         <span class="frame__header">1</span>
-         <div class="frame__rolls">
-            <span class="frame__roll frame__roll1"></span>
-            <span class="frame__roll frame__roll2"></span>
-         </div>
-         <span class="frame__score"></span>
+
+
+<!-- html template tag could be used instead, so it is not rendered. -->
+<div class="player player--template">
+   <div class="frame frame-1">
+      <span class="frame__header">1</span>
+      <div class="frame__rolls">
+         <span class="frame__roll frame__roll1"></span>
+         <span class="frame__roll frame__roll2"></span>
       </div>
-
-      <div class="frame frame-2">
-         <span class="frame__header">2</span>
-         <div class="frame__rolls">
-            <span class="frame__roll frame__roll1"></span>
-            <span class="frame__roll frame__roll2"></span>
-         </div>
-         <span class="frame__score"></span>
-      </div>
-
-      <div class="frame frame-3">
-         <span class="frame__header">3</span>
-         <div class="frame__rolls">
-            <span class="frame__roll frame__roll1"></span>
-            <span class="frame__roll frame__roll2"></span>
-         </div>
-         <span class="frame__score"></span>
-      </div>
-
-      <div class="frame frame-4">
-         <span class="frame__header">4</span>
-         <div class="frame__rolls">
-            <span class="frame__roll frame__roll1"></span>
-            <span class="frame__roll frame__roll2"></span>
-         </div>
-         <span class="frame__score"></span>
-      </div>
-
-      <div class="frame frame-5">
-         <span class="frame__header">5</span>
-         <div class="frame__rolls">
-            <span class="frame__roll frame__roll1"></span>
-            <span class="frame__roll frame__roll2"></span>
-         </div>
-         <span class="frame__score"></span>
-      </div>
-
-      <div class="frame frame-6">
-         <span class="frame__header">6</span>
-         <div class="frame__rolls">
-            <span class="frame__roll frame__roll1"></span>
-            <span class="frame__roll frame__roll2"></span>
-         </div>
-         <span class="frame__score"></span>
-      </div>
-
-      <div class="frame frame-7">
-         <span class="frame__header">7</span>
-         <div class="frame__rolls">
-            <span class="frame__roll frame__roll1"></span>
-            <span class="frame__roll frame__roll2"></span>
-         </div>
-         <span class="frame__score"></span>
-      </div>
-
-      <div class="frame frame-8">
-         <span class="frame__header">8</span>
-         <div class="frame__rolls">
-            <span class="frame__roll frame__roll1"></span>
-            <span class="frame__roll frame__roll2"></span>
-         </div>
-         <span class="frame__score"></span>
-      </div>
-
-      <div class="frame frame-9">
-         <span class="frame__header">9</span>
-         <div class="frame__rolls">
-            <span class="frame__roll frame__roll1"></span>
-            <span class="frame__roll frame__roll2"></span>
-         </div>
-         <span class="frame__score"></span>
-      </div>
-
-      <div class="frame frame-10">
-         <span class="frame__header">10</span>
-         <div class="frame__rolls">
-            <span class="frame__roll frame__roll1"></span>
-            <span class="frame__roll frame__roll2"></span>
-            <span class="frame__roll frame__roll3"></span>
-         </div>
-         <span class="frame__score"></span>
-      </div>
-
-      <div class="frame frame-total">
-         <span class="frame__header">TOTAL</span>
-         <span class="frame__score"></span>
-      </div>
-
+      <span class="frame__score"></span>
    </div>
 
-   <button class="button-play">Play</button>
+   <div class="frame frame-2">
+      <span class="frame__header">2</span>
+      <div class="frame__rolls">
+         <span class="frame__roll frame__roll1"></span>
+         <span class="frame__roll frame__roll2"></span>
+      </div>
+      <span class="frame__score"></span>
+   </div>
 
+   <div class="frame frame-3">
+      <span class="frame__header">3</span>
+      <div class="frame__rolls">
+         <span class="frame__roll frame__roll1"></span>
+         <span class="frame__roll frame__roll2"></span>
+      </div>
+      <span class="frame__score"></span>
+   </div>
+
+   <div class="frame frame-4">
+      <span class="frame__header">4</span>
+      <div class="frame__rolls">
+         <span class="frame__roll frame__roll1"></span>
+         <span class="frame__roll frame__roll2"></span>
+      </div>
+      <span class="frame__score"></span>
+   </div>
+
+   <div class="frame frame-5">
+      <span class="frame__header">5</span>
+      <div class="frame__rolls">
+         <span class="frame__roll frame__roll1"></span>
+         <span class="frame__roll frame__roll2"></span>
+      </div>
+      <span class="frame__score"></span>
+   </div>
+
+   <div class="frame frame-6">
+      <span class="frame__header">6</span>
+      <div class="frame__rolls">
+         <span class="frame__roll frame__roll1"></span>
+         <span class="frame__roll frame__roll2"></span>
+      </div>
+      <span class="frame__score"></span>
+   </div>
+
+   <div class="frame frame-7">
+      <span class="frame__header">7</span>
+      <div class="frame__rolls">
+         <span class="frame__roll frame__roll1"></span>
+         <span class="frame__roll frame__roll2"></span>
+      </div>
+      <span class="frame__score"></span>
+   </div>
+
+   <div class="frame frame-8">
+      <span class="frame__header">8</span>
+      <div class="frame__rolls">
+         <span class="frame__roll frame__roll1"></span>
+         <span class="frame__roll frame__roll2"></span>
+      </div>
+      <span class="frame__score"></span>
+   </div>
+
+   <div class="frame frame-9">
+      <span class="frame__header">9</span>
+      <div class="frame__rolls">
+         <span class="frame__roll frame__roll1"></span>
+         <span class="frame__roll frame__roll2"></span>
+      </div>
+      <span class="frame__score"></span>
+   </div>
+
+   <div class="frame frame-10">
+      <span class="frame__header">10</span>
+      <div class="frame__rolls">
+         <span class="frame__roll frame__roll1"></span>
+         <span class="frame__roll frame__roll2"></span>
+         <span class="frame__roll frame__roll3"></span>
+      </div>
+      <span class="frame__score"></span>
+   </div>
+
+   <div class="frame frame-total">
+      <span class="frame__header">TOTAL</span>
+      <span class="frame__score"></span>
+   </div>
 </div>
+
 
 </body>
 </html>
